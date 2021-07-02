@@ -40,6 +40,28 @@ export const getRecipeById = (req, res) =>{
     });    
 }
 
+export const searchRecipe = (req, res) =>{
+
+    axios.get(config.apiURL + '/complexSearch?apiKey=' + config.apiKey + '&number=12' + '&query=' + req.params.query)
+    .then(response => {
+        res.json(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
+export const randomRecipe = (req, res) =>{
+
+    axios.get(config.apiURL + '/random?apiKey=' + config.apiKey + '&number=12')
+    .then(response => {
+        res.json(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
 export const updateRecipeLikes = (req, res) =>{
     RecipesLikes.findOneAndUpdate( { _id : req.params.recipeID }, req.body, 
         { new : true, useFindAndModify : false },
