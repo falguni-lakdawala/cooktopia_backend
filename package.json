@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js --exec babel-node -e js"
+    "start": "nodemon --exec ./node_modules/.bin/babel-node index.js"
   },
   "author": "Falguni Lakdawala",
   "license": "ISC",

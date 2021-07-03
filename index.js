@@ -17,6 +17,13 @@ mongoose.connect('mongodb://localhost/cooktopiaDB', {
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json())
 
+// CORS Header 
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin": "*")
+})
+
+
 //JWT setup
 app.use((req, res, next) =>{
     if(req.headers && req.headers.authorization && 
