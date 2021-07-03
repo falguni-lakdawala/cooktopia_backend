@@ -20,8 +20,8 @@ app.use(bodyParser.json())
 // CORS Header 
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin": "*")
-})
+  res.header({ "Access-Control-Allow-Origin": "*" });
+}); 
 
 
 //JWT setup
