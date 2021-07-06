@@ -1,6 +1,7 @@
-import { addNewRecipeLike, getRecipes, getRecipeById,
-updateRecipeLikes, deleteRecipeLikesById, searchRecipe, 
-randomRecipe  } from '../controller/recipeController.js';
+import { getRecipes, getRecipeById, 
+    searchRecipe, randomRecipe  } from '../controller/recipeController.js';
+import {updateLikeRecipe, updateDislikeRecipe, 
+    getRecipeLikeDislike} from '../controller/recipeLikeController.js'
 import passport from 'passport';
 import  session from 'express-session';
 import MongoStore  from 'connect-mongo';
@@ -22,18 +23,24 @@ const routes  = (app) =>{
 
     app.route('/recipes')
     .get(getRecipes)
-    .post(addNewRecipeLike)
 
     app.route('/recipes/random')
     .get(randomRecipe)
+
+    app.route('/recipe/updaterecipelike')
+    .put(updateLikeRecipe)
+
+    app.route('/recipe/updaterecipedislike')
+    .put(updateDislikeRecipe)
+
+    app.route('/recipe/getrecipelikedislike/:recipeID')
+    .get(getRecipeLikeDislike)
 
     app.route('/recipes/:query')
     .get(searchRecipe)
 
     app.route('/recipe/:recipeID')
     .get( getRecipeById)
-    .put( updateRecipeLikes)
-    .delete(deleteRecipeLikesById);
 
     app.route('/login')
     .get(passport.authenticate('google', {scope : ['profile', 'email']}),
@@ -74,8 +81,7 @@ const routes  = (app) =>{
             console.log('logged out successfully');
             res.redirect('/');
         });
-    })
-      
+    })      
     
 }
 

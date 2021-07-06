@@ -4,14 +4,16 @@ import bcrypt from 'bcrypt';
 const Schema = mongoose.Schema;
 
 export const RecipesLikeSchema = new Schema({
-    recipeId : {
+    recipeID : {
         type : Number,
         required : true
     },
     likes : {
-        type : Number
+        type : Number,
+        default : 0 //counter to add when someone likes recipe
     },
     dislikes : {
-        type : Number
+        type : Number,
+        default : 0 //counter to add when someone dislikes recipe
     }
 })

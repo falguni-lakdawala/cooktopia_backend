@@ -3,7 +3,11 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 export const ShoppingCartSchema = new Schema({
-    username : {
+    uniqueID : {
+        type : String,
+        required : true
+    },
+    email : {
         type : String,
         required : true
     },

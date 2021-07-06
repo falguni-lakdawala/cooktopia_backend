@@ -26,6 +26,10 @@ export const UserSchema = new Schema({
         type : Date,
         default : Date.now
     },
-    likes : [Number],
-    dislikes : [Number]
+    likes : {
+        type:  Array //array of liked recipe ids
+    }, 
+    dislikes : {
+        type:  Array //array of disliked recipe ids
+    } 
 })
