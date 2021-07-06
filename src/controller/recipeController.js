@@ -19,19 +19,22 @@ export const addNewRecipeLike = (req, res) => {
 export const getRecipes = (req, res) => {
   // console.log('url ' + config.apiURL + '/complexSearch?apiKey=' + config.apiKey + '&cuisine=American');
 
-  axios
-    .get(
-      config.apiURL +
-        "/complexSearch?apiKey=" +
-        config.apiKey +
-        "&cuisine=American"
-    )
-    .then((response) => {
-      res.json(response.data);
+  if(req.session != null && req.session != undefined){
+    console.log('current user : ' + req.session.user.email);
+    
+    axios.get(config.apiURL + '/complexSearch?apiKey=' + config.apiKey + '&cuisine=American')
+    .then(response => {
+        res.json(response.data);
     })
-    .catch((error) => {
-      console.log(error);
+    .catch(error => {
+        console.log(error);
     });
+  }
+  else
+  {
+      res.redirect('/');
+      // res.json('unauthorized access');
+  }
 };
 
 export const getRecipeById = (req, res) => {

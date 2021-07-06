@@ -1,28 +1,31 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
 
 const Schema = mongoose.Schema;
 
 export const UserSchema = new Schema({
-    username : {
+    googleId : {
         type : String,
         required : true
     },
-    hashPassword : {
+    displayName : {
         type : String
     },
-    email : {
-        type : String,
-        required : true
+    firstName : {
+        type : String
     },
-    created_date : {
+    lastName : {
+        type : Date
+    },
+    email :{
+        type : String
+    },
+    image : {
+        type: String
+    },
+    createAt : {
         type : Date,
         default : Date.now
     },
     likes : [Number],
     dislikes : [Number]
 })
-
-UserSchema.methods.comparePassword = (password, hashPassword) => {
-    return bcrypt.compare(password, hashPassword);
-}

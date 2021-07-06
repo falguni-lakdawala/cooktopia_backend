@@ -17,12 +17,12 @@ export const ShoppingCartSchema = new Schema({
     imageURL : {
         type : String
     },
-    ingrefients : [
+    ingredients : [
         {
             ingredientName : String,
             ingredientId : Number,
             quantity : Number,
-            unit : String
+            unitofMeasure : String
         }
     ]
 })

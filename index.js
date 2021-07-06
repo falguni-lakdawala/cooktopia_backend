@@ -1,9 +1,12 @@
 import express from 'express';
 import routes from './src/routes/routes.js';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import JsonWebToken from 'jsonwebtoken';
 import cors from 'cors';
+import  mongoose   from 'mongoose';
+import  passport from 'passport';
+import { passports }from './src/controller/passport.js'; 
+import  session from 'express-session';
+import  bodyParser from 'body-parser';
+import MongoStore  from 'connect-mongo';
 
 const app = express();
 
@@ -23,30 +26,29 @@ mongoose.connect('mongodb://localhost/cooktopiaDB', {
 	useUnifiedTopology: true
 })
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
 
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(bodyParser.json());      
+app.use(bodyParser.urlencoded({extended: true}));
 
-//JWT setup
-app.use((req, res, next) => {
-	if (req.headers && req.headers.authorization &&
-		req.headers.authorization.split(' ')[0] == 'JWT') {
-		JsonWebToken.verify(req.headers.authorization.split(' ')[1], 'COOKTOPIA_APIs',
-			(err, decode) => {
-				if (err) {
-					req.user = undefined;
-				}
-				req.user = decode;
-				next();
-			})
-	}
-	else {
-		req.user = undefined;
-		next();
-	}
-})
-
+passports(passport);
 routes(app);
+
+
+app.use(
+    session({
+      secret: 'cooktopia',
+      resave: false,
+      saveUninitialized: false,
+      store: new MongoStore({ mongoUrl: 'mongodb://localhost:27017/cooktopiaDB',
+        ttl : 24 * 60 * 60,
+        autoRemove : 'native' 
+      })
+    })
+)
+
+app.use(express.urlencoded({extended : true}));
 
 app.get('/', (req, res) => {
 	res.send('node and express server is running on port ' + PORT)
