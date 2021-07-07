@@ -10,7 +10,7 @@ const updateRecipeLikesCounter = (recipeID) => {
     RecipesLikes.find({ recipeID: recipeID },
       function(err, recipe) {
         if (err) {
-          res.send(err);
+          return err;
         } else {
           if(recipe != null && recipe != undefined && recipe.length > 0){
             RecipesLikes.updateOne({recipeID : recipeID},
@@ -41,7 +41,7 @@ const updateRecipeDislikesCounter = async (recipeID) => {
     RecipesLikes.find({ recipeID: recipeID },
       function(err, recipe) {
         if (err) {
-          res.send(err);
+          return err;
         } else {
           if(recipe != null && recipe != undefined && recipe.length > 0){
             RecipesLikes.updateOne({recipeID : recipeID},

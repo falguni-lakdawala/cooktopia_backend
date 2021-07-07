@@ -1,7 +1,10 @@
 import { getRecipes, getRecipeById, 
     searchRecipe, randomRecipe  } from '../controller/recipeController.js';
 import {updateLikeRecipe, updateDislikeRecipe, 
-    getRecipeLikeDislike} from '../controller/recipeLikeController.js'
+    getRecipeLikeDislike} from '../controller/recipeLikeController.js';
+import { addRecipetoCart, deleteCartByRecipeID, getCartByRecipeID,
+    getShoppingCartList, 
+    updateCartByRecipeID} from '../controller/shoppingCartController.js';
 import passport from 'passport';
 import  session from 'express-session';
 import MongoStore  from 'connect-mongo';
@@ -41,6 +44,21 @@ const routes  = (app) =>{
 
     app.route('/recipe/:recipeID')
     .get( getRecipeById)
+
+    app.route('/recipecartlist')
+    .get(getShoppingCartList)
+
+    app.route('/recipecart/:recipeID')
+    .get(getCartByRecipeID)
+
+    app.route('/recipecart/addrecipecart')
+    .post(addRecipetoCart)
+    
+    app.route('/recipecart/updaterecipecart')
+    .put(updateCartByRecipeID)
+
+    app.route('/recipecart/deleterecipecart')
+    .delete(deleteCartByRecipeID)
 
     app.route('/login')
     .get(passport.authenticate('google', {scope : ['profile', 'email']}),
