@@ -7,6 +7,7 @@ import { passports }from './src/controller/passport.js';
 import  session from 'express-session';
 import  bodyParser from 'body-parser';
 import MongoStore  from 'connect-mongo';
+import { config } from './src/assets/config.js';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(cors(corsOptions));
 
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/cooktopiaDB', {
+mongoose.connect(config.connectionString, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 })
@@ -41,7 +42,7 @@ app.use(
       secret: 'cooktopia',
       resave: false,
       saveUninitialized: false,
-      store: new MongoStore({ mongoUrl: 'mongodb://localhost:27017/cooktopiaDB',
+      store: new MongoStore({ mongoUrl: config.connectionString,
         ttl : 24 * 60 * 60,
         autoRemove : 'native' 
       })

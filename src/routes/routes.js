@@ -8,6 +8,7 @@ import { addRecipetoCart, deleteCartByRecipeID, getCartByRecipeID,
 import passport from 'passport';
 import  session from 'express-session';
 import MongoStore  from 'connect-mongo';
+import { config } from '../assets/config.js';
 
 
 const routes  = (app) =>{
@@ -17,7 +18,7 @@ const routes  = (app) =>{
           secret: 'cooktopia',
           resave: false,
           saveUninitialized: false,
-          store: new MongoStore({ mongoUrl: 'mongodb://localhost:27017/cooktopiaDB',
+          store: new MongoStore({ mongoUrl: config.connectionString,
             ttl : 24 * 60 * 60,
             autoRemove : 'native' 
           })
