@@ -49,7 +49,7 @@ export const searchRecipe = (req, res) => {
       config.apiURL +
         "/complexSearch?apiKey=" +
         config.apiKey +
-        "&number=12" +
+        "&number=20" +
         "&query=" +
         req.params.query
     )
@@ -63,7 +63,7 @@ export const searchRecipe = (req, res) => {
 
 export const randomRecipe = (req, res) => {
   axios
-    .get(config.apiURL + "/random?apiKey=" + config.apiKey + "&number=3")
+    .get(config.apiURL + "/random?apiKey=" + config.apiKey + "&number=20")
     .then((response) => {
       res.json(response.data);
     })
