@@ -48,3 +48,24 @@ export const passports = (passport) =>{
     
 }
 
+export const getUserInfo = (req, res) => {
+    // console.log('url ' + config.apiURL + '/complexSearch?apiKey=' + config.apiKey + '&cuisine=American');
+  
+    if(req.session != null && req.session != undefined && req.session.user != undefined){
+      console.log('current user : ' + req.session.user.email);
+      
+      User.find({ email: req.session.user.email },
+        (err, user) => {
+        if (err) {
+          res.send(err);
+        }
+        res.json(user);
+      });
+      
+    }
+    else
+    {
+        res.send('null');
+    }
+  };
+

@@ -37,7 +37,7 @@ const updateRecipeLikesCounter = (recipeID) => {
     });
   };
   
-const updateRecipeDislikesCounter = async (recipeID) => {
+const updateRecipeDislikesCounter = (recipeID) => {
     RecipesLikes.find({ recipeID: recipeID },
       function(err, recipe) {
         if (err) {
@@ -80,7 +80,7 @@ export const getRecipeLikeDislikeCounter = (req, res) =>{
 };
   
 export const updateLikeRecipe = (req, res) => {
-  
+  if(req.session != null && req.session != undefined && req.session.user != undefined){
       User.findOneAndUpdate  (
         { email: req.session.user.email },
         { $addToSet: { likes: req.body.recipeID  }, $pull: { dislikes : req.body.recipeID } },
@@ -94,10 +94,14 @@ export const updateLikeRecipe = (req, res) => {
           }
         }
     );
+  }else
+  {
+      res.json('unauthorized access');
+  }   
 };
 
 export const updateDislikeRecipe = (req, res) => {
-  
+  if(req.session != null && req.session != undefined && req.session.user != undefined){
     User.findOneAndUpdate  (
       { email: req.session.user.email },
       { $addToSet: { dislikes: req.body.recipeID  }, $pull: { likes : req.body.recipeID } },
@@ -111,6 +115,10 @@ export const updateDislikeRecipe = (req, res) => {
         }
       }
     );
+  }else
+  {
+      res.json('unauthorized access');
+  }  
 };
   
 export const getRecipeLikeDislike = async (req, res) => {

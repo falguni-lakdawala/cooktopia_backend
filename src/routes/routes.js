@@ -6,6 +6,7 @@ import { addRecipetoCart, deleteCartByRecipeID, getCartByRecipeID,
     getShoppingCartList, 
     updateCartByRecipeID} from '../controller/shoppingCartController.js';
 import passport from 'passport';
+import { getUserInfo }from '../controller/passport.js'; 
 import  session from 'express-session';
 import MongoStore  from 'connect-mongo';
 import { config } from '../assets/config.js';
@@ -70,7 +71,7 @@ const routes  = (app) =>{
 
     app.route('/login/callback')
         .get(passport.authenticate('google', { 
-            failureRedirect: 'http://facebook.com/' }), 
+            failureRedirect: 'http://cooktopia.s3-website-us-west-2.amazonaws.com' }), 
         (req, res) => {
             console.log('session info : ');
             console.log(req.session.passport.user);
@@ -87,7 +88,7 @@ const routes  = (app) =>{
                     }
                 })
             }
-            res.redirect('http://google.com/')
+            res.redirect('http://cooktopia.s3-website-us-west-2.amazonaws.com/home')
 
         }
     )
@@ -98,9 +99,11 @@ const routes  = (app) =>{
                 return console.log(err);
             }
             console.log('logged out successfully');
-            res.redirect('/');
+            res.redirect('http://cooktopia.s3-website-us-west-2.amazonaws.com');
         });
     })      
+
+    app.route('/getuser').get(getUserInfo);
     
 }
 
