@@ -1,5 +1,5 @@
 import { getRecipes, getRecipeById, 
-    searchRecipe, randomRecipe  } from '../controller/recipeController.js';
+    searchRecipe, randomRecipe, recipeClasificationSearch  } from '../controller/recipeController.js';
 import {updateLikeRecipe, updateDislikeRecipe, 
     getRecipeLikeDislike} from '../controller/recipeLikeController.js';
 import { addRecipetoCart, deleteCartByRecipeID, getCartByRecipeID,
@@ -43,6 +43,9 @@ const routes  = (app) =>{
 
     app.route('/recipes/:query')
     .get(searchRecipe)
+
+    app.route('/recipeclassification')
+    .get(recipeClasificationSearch)
 
     app.route('/recipe/:recipeID')
     .get( getRecipeById)

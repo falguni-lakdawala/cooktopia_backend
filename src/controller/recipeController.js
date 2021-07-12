@@ -7,22 +7,17 @@ import { config } from "../assets/config.js";
 export const getRecipes = (req, res) => {
   // console.log('url ' + config.apiURL + '/complexSearch?apiKey=' + config.apiKey + '&cuisine=American');
 
-  if(req.session != null && req.session != undefined){
-    console.log('current user : ' + req.session.user.email);
-    
-    axios.get(config.apiURL + '/complexSearch?apiKey=' + config.apiKey + '&cuisine=American')
+    let num  = 0;
+    req.query.number ? num = req.query.number : num = 20;
+    axios.get(config.apiURL + '/complexSearch?apiKey=' + config.apiKey +
+     '&number=' + num  +
+     '&cuisine=American')
     .then(response => {
         res.json(response.data);
     })
     .catch(error => {
         console.log(error);
     });
-  }
-  else
-  {
-      res.redirect('/');
-      // res.json('unauthorized access');
-  }
 };
 
 export const getRecipeById = (req, res) => {
@@ -62,8 +57,11 @@ export const searchRecipe = (req, res) => {
 };
 
 export const randomRecipe = (req, res) => {
+  let num  = 0;
+  req.query.number ? num = req.query.number : num = 20;
+
   axios
-    .get(config.apiURL + "/random?apiKey=" + config.apiKey + "&number=20")
+    .get(config.apiURL + "/random?apiKey=" + config.apiKey + "&number=" + num)
     .then((response) => {
       res.json(response.data);
     })
@@ -71,3 +69,49 @@ export const randomRecipe = (req, res) => {
       console.log(error);
     });
 };
+
+
+export const recipeClasificationSearch = (req, res) =>{
+
+  console.log('query : '); console.log(req.query);
+  let query = '';
+
+  if(req.query.cuisine){
+    query +='&cuisine=' + req.query.cuisine;
+  }
+  if(req.query.diet){
+    query += '&diet=' + req.query.diet;
+  }
+  if(req.query.ingredient){
+    query += '&includeIngredients=' + req.query.ingredient;
+  }
+
+  if(req.query.intolerances){
+    query += '&intolerances=' + req.query.intolerances;
+  }
+
+  if(req.query.mealtype){
+    query += '&type=' + req.query.mealtype;
+  }
+
+  if(req.query.number){
+    query += '&number=' + req.query.number;
+  }
+  else{
+    query += '&number=20';
+  }
+  
+  axios
+    .get(
+      config.apiURL +
+        "/complexSearch?apiKey=" +
+        config.apiKey +
+        query
+    )
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+  });
+}
