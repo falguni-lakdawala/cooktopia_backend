@@ -1,10 +1,9 @@
 import { getRecipes, getRecipeById, 
     searchRecipe, randomRecipe, recipeClasificationSearch  } from '../controller/recipeController.js';
 import {updateLikeRecipe, updateDislikeRecipe, 
-    getRecipeLikeDislike} from '../controller/recipeLikeController.js';
+    getRecipeLikeDislike, getRecipeLikeDislikeCounter} from '../controller/recipeLikeController.js';
 import { addRecipetoCart, deleteCartByRecipeID, getCartByRecipeID,
-    getShoppingCartList, 
-    updateCartByRecipeID} from '../controller/shoppingCartController.js';
+    getShoppingCartList, updateCartByRecipeID} from '../controller/shoppingCartController.js';
 import passport from 'passport';
 import { getUserInfo }from '../controller/passport.js'; 
 import  session from 'express-session';
@@ -40,6 +39,9 @@ const routes  = (app) =>{
 
     app.route('/recipe/getrecipelikedislike/:recipeID')
     .get(getRecipeLikeDislike)
+
+    app.route('/recipe/getRecipelikedislikecounter/:recipeID')
+    .get(getRecipeLikeDislikeCounter)
 
     app.route('/recipes/:query')
     .get(searchRecipe)
