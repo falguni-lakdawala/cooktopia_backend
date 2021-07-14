@@ -70,7 +70,9 @@ const routes  = (app) =>{
     app.route('/login')
     .get(passport.authenticate('google', {scope : ['profile', 'email']}),
         (req, res) => {
-            // console.log(req.session.user);
+            console.log('login info : ');
+            console.log(req.session.user);
+            res.send(req.session.user);
         }
     )
 
@@ -93,8 +95,8 @@ const routes  = (app) =>{
                     }
                 })
             }
-            res.redirect('http://cooktopia.s3-website-us-west-2.amazonaws.com/home')
-
+            // res.redirect('http://cooktopia.s3-website-us-west-2.amazonaws.com/home')
+            res.send(req.session.user);
         }
     )
       
