@@ -95,8 +95,8 @@ const routes  = (app) =>{
                     }
                 })
             }
-            // res.redirect('http://cooktopia.s3-website-us-west-2.amazonaws.com/home')
-            res.send(req.session.user);
+            res.redirect('http://cooktopia.s3-website-us-west-2.amazonaws.com/home')
+            // res.send(req.session.user);
         }
     )
       
