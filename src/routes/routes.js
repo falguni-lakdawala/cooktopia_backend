@@ -37,7 +37,7 @@ const routes  = (app) =>{
     app.route('/recipe/updaterecipedislike')
     .put(updateDislikeRecipe)
 
-    app.route('/recipe/getrecipelikedislike/:recipeID')
+    app.route('/recipe/getrecipelikedislike/:recipeID/:id')
     .get(getRecipeLikeDislike)
 
     app.route('/recipe/getRecipelikedislikecounter/:recipeID')
@@ -55,7 +55,7 @@ const routes  = (app) =>{
     app.route('/recipecartlist')
     .get(getShoppingCartList)
 
-    app.route('/recipecart/:recipeID')
+    app.route('/recipecart/:recipeID/:id')
     .get(getCartByRecipeID)
 
     app.route('/recipecart/addrecipecart')
@@ -106,7 +106,7 @@ const routes  = (app) =>{
                 return console.log(err);
             }
             console.log('logged out successfully');
-            res.redirect('http://cooktopia.s3-website-us-west-2.amazonaws.com');
+            res.send('success');
         });
     })      
 

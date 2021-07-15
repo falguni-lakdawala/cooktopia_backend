@@ -8,17 +8,17 @@ const User = mongoose.model("User", UserSchema);
 
 export const addRecipetoCart = async (req, res) => {
 
-    if(req.session != null && req.session != undefined && req.session.user != undefined){
+    if(req.body.id != null && req.body.id != undefined){
 
-        let uniqueID = req.session.user.email + '-' + req.body.recipeID;
+        let uniqueID = req.body.id + '-' + req.body.recipeID;
         let cart = await ShoppingCart.find({ uniqueID : uniqueID });
         if(cart != undefined && cart.length > 0){
             res.send(cart);
         }
         else{
             const newRecipetoCart = new ShoppingCart({
-                uniqueID : req.session.user.email + '-' + req.body.recipeID,
-                email : req.session.user.email,
+                uniqueID : uniqueID,
+                email : req.body.id,
                 recipeID: req.body.recipeID,
                 recipeName : req.body.recipeName,
                 imageURL : req.body.imageURL,
@@ -42,7 +42,7 @@ export const addRecipetoCart = async (req, res) => {
 
 export const getCartByRecipeID = (req, res) =>{
     ShoppingCart.find({
-        uniqueID : req.session.user.email + '-' + req.params.recipeID
+        uniqueID : req.params.id + '-' + req.params.recipeID
     }, (err, cart) =>{
         if(err){
             res.send(err);
@@ -55,8 +55,8 @@ export const getCartByRecipeID = (req, res) =>{
 
 export const updateCartByRecipeID = (req, res) => {
 
-    if(req.session != null && req.session != undefined && req.session.user != undefined){
-        let uniqueID = req.session.user.email + '-' + req.body.recipeID;
+    if(req.body.id != null && req.body.id != undefined ){
+        let uniqueID = req.body.id + '-' + req.body.recipeID;
         console.log(uniqueID);
         ShoppingCart.findOneAndUpdate  (
             { uniqueID : uniqueID },
@@ -79,8 +79,8 @@ export const updateCartByRecipeID = (req, res) => {
 }
 
 export const deleteCartByRecipeID = (req, res) => {
-    if(req.session != null && req.session != undefined && req.session.user != undefined){
-        ShoppingCart.deleteOne({ uniqueID: req.session.user.email + '-' + req.body.recipeID }, 
+    if(req.body.id != null && req.body.id != undefined){
+        ShoppingCart.deleteOne({ uniqueID: req.body.id + '-' + req.body.recipeID }, 
         function (err, result) {
             if(err) {
                 res.send(err);
@@ -96,7 +96,7 @@ export const deleteCartByRecipeID = (req, res) => {
 }
 
 export const getShoppingCartList = (req, res) => {
-    ShoppingCart.find({ email : req.session.user.email }, function(err, result) {
+    ShoppingCart.find({ email : req.params.id }, function(err, result) {
         if(err) {
             res.send(err);
         }
