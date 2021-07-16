@@ -7,7 +7,7 @@ export const ShoppingCartSchema = new Schema({
         type : String,
         required : true
     },
-    email : {
+    userID : {
         type : String,
         required : true
     },

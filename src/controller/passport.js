@@ -67,5 +67,25 @@ export const getUserInfo = (req, res) => {
     {
         res.send('null');
     }
-  };
+};
+
+export const createUser = (req, res) =>{
+    let user = await User.findOne({email : req.body.email });
+    if(!user){
+        const newUser = new User({
+            userID: req.body.id,
+            displayName : req.body.displayName,
+            firstName : req.body.fname,
+            lastName : req.body.lname,
+            email : req.body.email,
+            image : req.body.photoURL
+        });
+
+        await newUser.save();
+        res.send(newUser);
+    }
+    else{
+        res.send(user);
+    }
+};
 

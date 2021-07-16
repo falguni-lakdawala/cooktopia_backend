@@ -5,7 +5,7 @@ import {updateLikeRecipe, updateDislikeRecipe,
 import { addRecipetoCart, deleteCartByRecipeID, getCartByRecipeID,
     getShoppingCartList, updateCartByRecipeID} from '../controller/shoppingCartController.js';
 import passport from 'passport';
-import { getUserInfo }from '../controller/passport.js'; 
+import { getUserInfo, createUser }from '../controller/passport.js'; 
 import  session from 'express-session';
 import MongoStore  from 'connect-mongo';
 import { config } from '../assets/config.js';
@@ -111,6 +111,8 @@ const routes  = (app) =>{
     })      
 
     app.route('/getuser').get(getUserInfo);
+
+    app.route('/createuser').post(createUser);
     
 }
 

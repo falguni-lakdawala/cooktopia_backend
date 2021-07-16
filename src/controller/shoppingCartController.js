@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
 import { ShoppingCartSchema } from "../models/shoppingCartModel.js";
-import { UserSchema } from "../models/userModel.js";
 
 
 const ShoppingCart = mongoose.model("ShoppingCart", ShoppingCartSchema);
-const User = mongoose.model("User", UserSchema);
 
 export const addRecipetoCart = async (req, res) => {
 
@@ -18,7 +16,7 @@ export const addRecipetoCart = async (req, res) => {
         else{
             const newRecipetoCart = new ShoppingCart({
                 uniqueID : uniqueID,
-                email : req.body.id,
+                userID : req.body.id,
                 recipeID: req.body.recipeID,
                 recipeName : req.body.recipeName,
                 imageURL : req.body.imageURL,
@@ -40,7 +38,7 @@ export const addRecipetoCart = async (req, res) => {
     }   
 }
 
-export const getCartByRecipeID = (req, res) =>{
+export const getCartByRecipeID = (req, res) => {
     ShoppingCart.find({
         uniqueID : req.params.id + '-' + req.params.recipeID
     }, (err, cart) =>{
@@ -96,7 +94,7 @@ export const deleteCartByRecipeID = (req, res) => {
 }
 
 export const getShoppingCartList = (req, res) => {
-    ShoppingCart.find({ email : req.params.id }, function(err, result) {
+    ShoppingCart.find({ userID : req.params.id }, function(err, result) {
         if(err) {
             res.send(err);
         }

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { UserSchema } from "../models/userModel.js";
 import axios from "axios";
 import { config } from "../assets/config.js";
 

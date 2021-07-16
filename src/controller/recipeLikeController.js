@@ -82,7 +82,7 @@ export const getRecipeLikeDislikeCounter = (req, res) =>{
 export const updateLikeRecipe = (req, res) => {
   if(req.body.id != null && req.body.id != undefined){
       User.findOneAndUpdate  (
-        { email: req.body.id },
+        { userID: req.body.id },
         { $addToSet: { likes: req.body.recipeID  }, $pull: { dislikes : req.body.recipeID } },
         { multi : true },
         function(err, result) {
@@ -103,7 +103,7 @@ export const updateLikeRecipe = (req, res) => {
 export const updateDislikeRecipe = (req, res) => {
   if(req.body.id != null && req.body.id != undefined){
     User.findOneAndUpdate  (
-      { email: req.body.id },
+      { userID: req.body.id },
       { $addToSet: { dislikes: req.body.recipeID  }, $pull: { likes : req.body.recipeID } },
       { multi : true },
       function(err, result) {
@@ -124,10 +124,10 @@ export const updateDislikeRecipe = (req, res) => {
 export const getRecipeLikeDislike = async (req, res) => {
     let like = false, dislike = false;
     let likeData = await User.find(
-      { 'email' : req.params.id,  'likes' :  req.params.recipeID  });
+      { 'userID' : req.params.id,  'likes' :  req.params.recipeID  });
   
     let dislikeData = await User.find(
-        { 'email' : req.params.id,  'dislikes' :  req.params.recipeID  });
+        { 'userID' : req.params.id,  'dislikes' :  req.params.recipeID  });
       
     if(likeData != null && likeData != undefined && likeData.length > 0){
       like = true;
