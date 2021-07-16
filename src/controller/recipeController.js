@@ -43,7 +43,7 @@ export const searchRecipe = (req, res) => {
       config.apiURL +
         "/complexSearch?apiKey=" +
         config.apiKey +
-        "&number=20" +
+        "&number=20&addRecipeInformation=true" +
         "&query=" +
         req.params.query
     )
