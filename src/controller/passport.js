@@ -69,7 +69,7 @@ export const getUserInfo = (req, res) => {
     }
 };
 
-export const createUser = (req, res) =>{
+export const createUser = async (req, res) =>{
     let user = await User.findOne({email : req.body.email });
     if(!user){
         const newUser = new User({
