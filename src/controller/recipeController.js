@@ -99,6 +99,8 @@ export const recipeClasificationSearch = (req, res) =>{
   else{
     query += '&number=20';
   }
+
+  query +='&addRecipeInformation=true';
   
   axios
     .get(
