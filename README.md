@@ -23,8 +23,15 @@
 
 -----------Start Shopping cart related APIS ------------------
 
-14. http://localhost:5000/recipecart/addrecipecart -  Add recipe to shopping cart 
-15. http://localhost:5000/recipecart/updaterecipecart - Update recipe to shopping cart
+14. http://localhost:5000/recipecart/addrecipecart -  Add recipe to shopping cart
+15. method(POST) 
+
+{
+
+}
+
+17. http://localhost:5000/recipecart/updaterecipecart - Update recipe to shopping cart
+18. PUT
 -----request body : 
 {
     "recipeID" : "100025",
@@ -61,6 +68,7 @@
 }
 
 17. http://localhost:5000/recipecartlist - list of recipes indside shopping cart
+18. method(GET)
 
 18. http://localhost:5000/recipecart/:recipeID - individual recipe from shopping cart
 
@@ -70,18 +78,25 @@
 -------------Start Recipe Like/Dislike related APIs---------------
 
 18. http://localhost:5000/recipe/updaterecipelike - update like to individual recipe
+PUT
 {
     "recipeID" : "100025"
 }
 
 19. http://localhost:5000/recipe/updaterecipedislike - update dislike to individual recipe
+20. PUT
 {
-    "recipeID" : "100025"
+    "recipeID" : "100025",
+    userID
 }
 
-20. http://localhost:5000/recipe/getrecipelikedislike/:recipeID - get individual recipe liked or diliked status for individual user  
+20. http://localhost:5000/recipe/getrecipelikedislike/:id - get individual recipe liked or diliked status for individual user 
+21. method:
+22. {
+userID:
+}
 
-21. http://localhost:5000/recipe/getRecipeLikeDislikeCounter/:recipeID - get recipe like and dislike count for individual recipe
+21. http://localhost:5000/recipe/getRecipeLikeDislikeCounter/:recipeID/:id - get recipe like and dislike count for individual recipe
 http://localhost:5000/recipe/getRecipeLikeDislikeCounter/100352
 
 -------------End Recipe Like/Dislike related APIs---------------
