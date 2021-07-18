@@ -1,7 +1,7 @@
 import { getRecipes, getRecipeById, 
     searchRecipe, randomRecipe, recipeClasificationSearch  } from '../controller/recipeController.js';
 import {updateLikeRecipe, updateDislikeRecipe, 
-    getRecipeLikeDislike, getRecipeLikeDislikeCounter} from '../controller/recipeLikeController.js';
+    getFavoriteRecipes, getRecipeLikeDislikeCounter} from '../controller/recipeLikeController.js';
 import { addRecipetoCart, deleteCartByRecipeID, getCartByRecipeID,
     getShoppingCartList, updateCartByRecipeID} from '../controller/shoppingCartController.js';
 import passport from 'passport';
@@ -37,10 +37,10 @@ const routes  = (app) =>{
     app.route('/recipe/updaterecipedislike')
     .put(updateDislikeRecipe)
 
-    app.route('/recipe/getrecipelikedislike/:recipeID/:id')
-    .get(getRecipeLikeDislike)
+    app.route('/recipe/getfavoriterecipes/:userID')
+    .get(getFavoriteRecipes)
 
-    app.route('/recipe/getRecipelikedislikecounter/:recipeID')
+    app.route('/recipe/getRecipelikedislikecounter/:recipeID/:userID')
     .get(getRecipeLikeDislikeCounter)
 
     app.route('/recipes/:query')
@@ -52,10 +52,10 @@ const routes  = (app) =>{
     app.route('/recipe/:recipeID')
     .get( getRecipeById)
 
-    app.route('/recipecartlist')
+    app.route('/recipecartlist/:userID')
     .get(getShoppingCartList)
 
-    app.route('/recipecart/:recipeID/:id')
+    app.route('/recipecart/:recipeID/:userID')
     .get(getCartByRecipeID)
 
     app.route('/recipecart/addrecipecart')
@@ -110,7 +110,7 @@ const routes  = (app) =>{
         });
     })      
 
-    app.route('/getuser').get(getUserInfo);
+    app.route('/getuser/:userID').get(getUserInfo);
 
     app.route('/createuser').post(createUser);
     

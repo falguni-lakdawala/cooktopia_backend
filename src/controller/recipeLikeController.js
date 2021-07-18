@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import { RecipesLikeSchema } from "../models/recipesLikeModel.js";
 import { UserSchema } from "../models/userModel.js";
-
+import axios from "axios";
+import { config } from "../assets/config.js";
 
 const RecipesLikes = mongoose.model("RecipeLike", RecipesLikeSchema);
 const User = mongoose.model("User", UserSchema);
@@ -80,16 +81,17 @@ export const getRecipeLikeDislikeCounter = (req, res) =>{
 };
   
 export const updateLikeRecipe = (req, res) => {
-  if(req.body.id != null && req.body.id != undefined){
+  if(req.body.userID != null && req.body.userID != undefined){
       User.findOneAndUpdate  (
-        { userID: req.body.id },
+        { userID: req.body.userID },
         { $addToSet: { likes: req.body.recipeID  }, $pull: { dislikes : req.body.recipeID } },
-        { multi : true },
+        { multi : true, new :true },
         function(err, result) {
           if (err) {
             res.send(err);
           } else {
             updateRecipeLikesCounter(req.body.recipeID);
+            console.log("result" + result);
             res.send(result);
           }
         }
@@ -101,9 +103,9 @@ export const updateLikeRecipe = (req, res) => {
 };
 
 export const updateDislikeRecipe = (req, res) => {
-  if(req.body.id != null && req.body.id != undefined){
+  if(req.body.userID != null && req.body.userID != undefined){
     User.findOneAndUpdate  (
-      { userID: req.body.id },
+      { userID: req.body.userID },
       { $addToSet: { dislikes: req.body.recipeID  }, $pull: { likes : req.body.recipeID } },
       { multi : true },
       function(err, result) {
@@ -121,26 +123,31 @@ export const updateDislikeRecipe = (req, res) => {
   }  
 };
   
-export const getRecipeLikeDislike = async (req, res) => {
-    let like = false, dislike = false;
+export const getFavoriteRecipes = async (req, res) => {
     let likeData = await User.find(
-      { 'userID' : req.params.id,  'likes' :  req.params.recipeID  });
-  
-    let dislikeData = await User.find(
-        { 'userID' : req.params.id,  'dislikes' :  req.params.recipeID  });
+      { 'userID' : req.params.userID });
       
     if(likeData != null && likeData != undefined && likeData.length > 0){
-      like = true;
+      let recipeIds = likeData[0].likes;
+
+      if(recipeIds != undefined && recipeIds.length > 0){
+        let ids = recipeIds.join(",");
+        axios
+        .get(
+          config.apiURL +
+            "/informationBulk?apiKey=" +
+            config.apiKey +
+            "&ids=" + ids
+        )
+        .then((response) => {
+          res.json(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
     }
-    
-    if(dislikeData != null && dislikeData != undefined && dislikeData.length > 0){
-      dislike = true;
+    else{
+      res.json('null');
     }
-      
-    let json = {
-      'like' : like, 'dislike' : dislike
-    }
-  
-    res.json(json);
-  
 };

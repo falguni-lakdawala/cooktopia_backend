@@ -21,7 +21,7 @@ export const passports = (passport) =>{
         new Strategy({
             clientID: config.googleClientID,
             clientSecret: config.clientSecret,
-            callbackURL: 'http://localhost:5000/login/callback'
+            callbackURL: 'http://localhost:3000/login/callback'
         }, 
         async (accessToken, refreshToken, profile, done) => {
     
@@ -51,10 +51,10 @@ export const passports = (passport) =>{
 export const getUserInfo = (req, res) => {
     // console.log('url ' + config.apiURL + '/complexSearch?apiKey=' + config.apiKey + '&cuisine=American');
   
-    if(req.session != null && req.session != undefined && req.session.user != undefined){
-      console.log('current user : ' + req.session.user.email);
+    if(req.params.userID != null && req.params.userID != undefined){
+      console.log('current user : ' + req.params.userID);
       
-      User.find({ email: req.session.user.email },
+      User.find({ userID: req.params.userID },
         (err, user) => {
         if (err) {
           res.send(err);
@@ -73,7 +73,7 @@ export const createUser = async (req, res) =>{
     let user = await User.findOne({email : req.body.email });
     if(!user){
         const newUser = new User({
-            userID: req.body.id,
+            userID: req.body.userID,
             displayName : req.body.displayName,
             firstName : req.body.fname,
             lastName : req.body.lname,
