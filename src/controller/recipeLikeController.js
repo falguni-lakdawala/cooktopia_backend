@@ -146,8 +146,11 @@ export const getFavoriteRecipes = async (req, res) => {
           console.log(error);
         });
       }
+      else{
+        res.json([]);
+      }
     }
     else{
-      res.json('null');
+      res.json([]);
     }
 };

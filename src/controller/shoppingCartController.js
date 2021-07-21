@@ -99,7 +99,7 @@ export const getShoppingCartList = (req, res) => {
             res.send(err);
         }
         else{
-            res.send(result);
+            res.json(result);
         }
     })
 }
