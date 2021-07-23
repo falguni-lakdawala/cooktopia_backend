@@ -107,7 +107,7 @@ export const updateDislikeRecipe = (req, res) => {
     User.findOneAndUpdate  (
       { userID: req.body.userID },
       { $addToSet: { dislikes: req.body.recipeID  }, $pull: { likes : req.body.recipeID } },
-      { multi : true },
+      { multi : true, new : true },
       function(err, result) {
         if (err) {
           res.send(err);
