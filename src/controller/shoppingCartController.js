@@ -93,6 +93,23 @@ export const deleteCartByRecipeID = (req, res) => {
     } 
 }
 
+export const deleteShoppingCart = (req, res) => {
+    if(req.body.userID != null && req.body.userID != undefined){
+        ShoppingCart.deleteMany({ userID: req.body.userID }, 
+        function (err, result) {
+            if(err) {
+                res.send(err);
+            }
+            else{
+                res.send(true);
+            }
+        });
+    }
+    else{
+        res.json('unauthorized access');
+    } 
+}
+
 export const getShoppingCartList = (req, res) => {
     ShoppingCart.find({ userID : req.params.userID }, function(err, result) {
         if(err) {

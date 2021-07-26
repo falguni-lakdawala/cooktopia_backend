@@ -2,7 +2,7 @@ import { getRecipes, getRecipeById,
     searchRecipe, randomRecipe, recipeClasificationSearch  } from '../controller/recipeController.js';
 import {updateLikeRecipe, updateDislikeRecipe, 
     getFavoriteRecipes, getRecipeLikeDislikeCounter} from '../controller/recipeLikeController.js';
-import { addRecipetoCart, deleteCartByRecipeID, getCartByRecipeID,
+import { addRecipetoCart, deleteCartByRecipeID, deleteShoppingCart, getCartByRecipeID,
     getShoppingCartList, updateCartByRecipeID} from '../controller/shoppingCartController.js';
 import passport from 'passport';
 import { getUserInfo, createUser }from '../controller/passport.js'; 
@@ -66,6 +66,9 @@ const routes  = (app) =>{
 
     app.route('/recipecart/deleterecipecart')
     .delete(deleteCartByRecipeID)
+
+    app.route('/recipecart/deleteallrecipes')
+    .delete(deleteShoppingCart)
 
     app.route('/login')
     .get(passport.authenticate('google', {scope : ['profile', 'email']}),
