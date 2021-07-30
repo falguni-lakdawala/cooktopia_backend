@@ -13,7 +13,7 @@ const app = express();
 
 const PORT = 3000;
 
-const allowedOrigins = ['http://localhost:3000', 'http://cooktopia.s3-website-us-west-2.amazonaws.com','http://www.cooktopia.ca.s3-website-us-west-2.amazonaws.com'];
+const allowedOrigins = ['http://localhost:3000', 'http://cooktopia.s3-website-us-west-2.amazonaws.com','http://www.cooktopia.ca.s3-website-us-west-2.amazonaws.com','www.cooktopia.ca'];
 const corsOptions = {
 	origin: allowedOrigins,
 	optionsSuccessStatus: 200
